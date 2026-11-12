@@ -1,0 +1,19 @@
+# narrow int64_t strides to Eigen::Index explicitly; -Werror=conversion in the
+# tests breaks on 32-bit Index (x32, i686); upstream c3ec7920cf on refactored code
+--- nanobind-2.15.0.orig/include/nanobind/eigen/dense.h	2022-11-09 13:37:21.000000000 +0100
++++ nanobind-2.15.0/include/nanobind/eigen/dense.h	2026-11-12 12:13:44.228382005 +0100
+@@ -347,11 +347,11 @@
+             outer = 0;
+ 
+         if constexpr (std::is_same_v<StrideType, Eigen::InnerStride<IS>>)
+-            return StrideType(inner);
++            return StrideType((Eigen::Index) inner);
+         else if constexpr (std::is_same_v<StrideType, Eigen::OuterStride<OS>>)
+-            return StrideType(outer);
++            return StrideType((Eigen::Index) outer);
+         else
+-            return StrideType(outer, inner);
++            return StrideType((Eigen::Index) outer, (Eigen::Index) inner);
+     }
+ 
+     operator Map() {

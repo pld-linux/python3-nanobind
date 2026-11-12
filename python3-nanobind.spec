@@ -8,11 +8,12 @@ Summary:	nanobind: tiny and efficient C++/Python bindings
 Summary(pl.UTF-8):	nanobind - mały i wydajne wiązania C++/Python
 Name:		python3-%{module}
 Version:	2.15.0
-Release:	1
+Release:	2
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://files.pythonhosted.org/packages/source/n/nanobind/%{module}-%{version}.tar.gz
 # Source0-md5:	638c0b45b652937963ea82264718427f
+Patch0:		nanobind-eigen-32bit-index.patch
 URL:		https://pypi.org/project/nanobind/
 BuildRequires:	cmake >= 3.15
 BuildRequires:	ninja
@@ -71,6 +72,7 @@ Dokumentacja API modułu Pythona %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch -P0 -p1
 
 %build
 %py3_build_pyproject
